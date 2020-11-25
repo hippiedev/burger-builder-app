@@ -4,7 +4,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "../../components/UI/Modal/Modal";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import OrderSummary from "../../components/Burger/Order/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
 import withErrorHanler from "../../hoc/Auxillary/withErrorHandler/withErrorHandler";
 
