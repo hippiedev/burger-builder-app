@@ -18,7 +18,6 @@ const Burger = (props) => {
              textAlign: 'center'
             }}>Please start adding ingredients</p>
         }
-        console.log(transformedngredients)
     return (
         <div className={classes.Burger}>
             <BurgerIngredient type="bread-top"/>
