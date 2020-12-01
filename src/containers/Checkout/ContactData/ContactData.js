@@ -3,14 +3,62 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Input from "../../../components/UI/Input/Input";
+import 'react-router';
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: "",
+    orderForm: {
+      name: {
+          elementType: 'input',
+          elementConfig: {
+              type: 'text',
+              placeholder: 'Your Name',
+          },
+          value: "",
+      }, 
+      street: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'text',
+            placeholder: 'Street',
+        },
+        value: "",
+    },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'text',
+            placeholder: 'ZIP Code',
+        },
+        value: "",
+    },
+      country: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'text',
+            placeholder: 'Country',
+        },
+        value: "",
+    },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'email',
+            placeholder: 'Your Email',
+        },
+        value: "",
+    },
+      deeliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+            options: [
+                {value: 'fastest', displayValue: 'Fastest'},
+                {value: 'Cheapest', displayValue: 'Cheapest'},
+        ]
+        },
+        value: "",
+    },
     },
     loading: false,
   };
@@ -23,13 +71,6 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: "Jonathan",
-        address: "test street",
-        zipCode: "10291",
-        country: "Nigeria",
-      },
-      email: "test@test.com",
     };
     axios
       .post("/orders.json", order)
@@ -37,7 +78,7 @@ class ContactData extends Component {
         this.setState({
           loading: false,
         });
-        console.log(response);
+        console.log(this.props);
       })
       .catch((error) =>
         this.setState({
@@ -45,47 +86,49 @@ class ContactData extends Component {
         })
       );
   };
-  
+
   render() {
-    let buttonContent = 'Order'; 
+    let buttonContent = "Order";
     if (this.state.loading) {
-        buttonContent = <CircularProgress
-        style={{ margin: "0 auto", display: "block" }}
-        variant="indeterminate"
-        disableShrink
-        color="secondary"
-        size={20}
-        thickness={4}
-        {...this.props}
-      />
+      buttonContent = (
+        <CircularProgress
+          style={{ margin: "0 auto", display: "block" }}
+          variant="indeterminate"
+          disableShrink
+          color="secondary"
+          size={20}
+          thickness={4}
+          {...this.props}
+        />
+      );
     }
     return (
       <div className={classes.ContactData}>
         <h4>Enter your contact data</h4>
         <form>
-          <input
-            className={classes.Input}
+          <Input
+            inputtype="input"
             type="text"
             name="name"
-            placeholder="your name"
+            placeholder="Your name"
           />
-          <input
-            className={classes.Input}
+          <Input
+            inputtype="input"
             type="email"
             name="email"
-            placeholder="your email"
+            placeholder="Your email"
           />
-          <input
-            className={classes.Input}
+          <Input
+            inputtype="input"
             type="text"
             name="street"
-            placeholder="your street"
+            placeholder="Street"
           />
-          <input
-            className={classes.Input}
+          <Input
+            inputtype="input"
             type="text"
             name="postal"
-            placeholder="your postal"
+            placeholder="Postal"
           />
           <Button btnType="Success" clicked={this.orderHandler}>
             {buttonContent}
