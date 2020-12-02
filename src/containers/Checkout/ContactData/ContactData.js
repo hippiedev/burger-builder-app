@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Aux} from '../../../hoc/Auxillary/Auxillary';
+import { Aux } from "../../../hoc/Auxillary/Auxillary";
 import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
@@ -18,12 +18,12 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-            required: true,
-            minLength: 2,
-            maxLength: 15
+          required: true,
+          minLength: 2,
+          maxLength: 15,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       street: {
         elementType: "input",
@@ -33,12 +33,12 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-            required: true,
-            minLength: 4,
-            maxLength: 22
+          required: true,
+          minLength: 4,
+          maxLength: 22,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       zipCode: {
         elementType: "input",
@@ -48,12 +48,12 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
+          required: true,
+          minLength: 5,
+          maxLength: 10,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       country: {
         elementType: "input",
@@ -63,12 +63,12 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-            required: true,
-            minLength: 3,
-            maxLength: 10
+          required: true,
+          minLength: 3,
+          maxLength: 10,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       email: {
         elementType: "input",
@@ -78,12 +78,12 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-            required: true,
-            minLength: 5,
-            maxLength: 30
+          required: true,
+          minLength: 5,
+          maxLength: 30,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       deeliveryMethod: {
         elementType: "select",
@@ -95,32 +95,34 @@ class ContactData extends Component {
         },
         value: "fastest",
         validation: {},
-        valid: true
+        valid: true,
       },
     },
     loading: false,
-    formIsValid: false
+    formIsValid: false,
   };
   checkValidity = (value, rules) => {
-      let isValid = true;
-    
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
+    let isValid = true;
 
-        return isValid;
-  }
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid;
+  };
   orderHandler = (event) => {
     event.preventDefault();
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
-        formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
     }
     this.setState({
       loading: true,
@@ -145,24 +147,27 @@ class ContactData extends Component {
       );
   };
   inputChangedHandler = (event, inputIdentifier) => {
-      const updatedOrderForm = {
-          ...this.state.orderForm
-      }
-      const updatedFormElement = {
-          ...updatedOrderForm[inputIdentifier]
-        }
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
+    const updatedOrderForm = {
+      ...this.state.orderForm,
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier],
+    };
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedOrderForm) {
-            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-        }
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
 
-        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
-  }
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+  };
   render() {
     const formElementsArray = [];
 
@@ -191,16 +196,27 @@ class ContactData extends Component {
       <div className={classes.ContactData}>
         <h4>Enter your contact data</h4>
         <form onSubmit={this.orderHandler}>
-          {formElementsArray.map(formElement => (
-              <Aux key={formElement.id}>
-              <Input key={formElement.id} elementType={formElement.config.elementType} elementConfig={formElement.config.elementConfig} value={formElement.config.elementConfig.value} changed={(event) => this.inputChangedHandler(event, formElement.id)}
-              invalid={!formElement.config.valid}
-              shouldValidate={formElement.config.validation}
-              touched={formElement.config.touched}
+          {formElementsArray.map((formElement) => (
+            <Aux key={formElement.id}>
+              <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.elementConfig.value}
+                changed={(event) =>
+                  this.inputChangedHandler(event, formElement.id)
+                }
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
               />
-              </Aux>
+            </Aux>
           ))}
-          <Button btnType="Success" clicked={this.orderHandler} disabled={!this.state.formIsValid}>
+          <Button
+            btnType="Success"
+            clicked={this.orderHandler}
+            disabled={!this.state.formIsValid}
+          >
             {buttonContent}
           </Button>
         </form>
