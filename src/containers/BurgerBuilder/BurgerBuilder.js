@@ -7,7 +7,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import axios from "../../axios-orders";
 import OrderSummary from "../../components/Burger/Order/OrderSummary/OrderSummary";
 import {connect} from 'react-redux';
-import * as burgerBuilderActions from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 import withErrorHandler from "../../hoc/Auxillary/withErrorHandler/withErrorHandler";
 /*
 import axios from "../../axios-orders";
@@ -33,6 +33,7 @@ class BurgerBuilder extends Component {
   };
   purchaseContinueHandler = () => {
       this.props.history.push('/checkout');
+      this.props.onInitPurchase()
   };
   
   updatePurchaseState(ingredients) {
@@ -125,14 +126,16 @@ const mapStateToProps = state => {
   return{
     ings: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    purchased: state.order.purchased
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
-    onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-    onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+    onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   }
 }
 

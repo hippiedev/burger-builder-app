@@ -132,7 +132,7 @@ class ContactData extends Component {
       price: this.props.price,
       orderData: formData,
     };
-    this.props.onOrderBurger(order)
+    this.props.onOrderBurger(order);
   };
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedOrderForm = {
