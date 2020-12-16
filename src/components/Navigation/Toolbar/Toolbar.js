@@ -9,7 +9,7 @@ const Toolbar = (props) => (
         <img className={classes.burger} src={burgerIcon} alt="burger" onClick={props.clicked}/>
         <Logo height="80%"/>
         <nav className={classes.DesktopOnly}>
-            <NavigationItems/>
+            <NavigationItems isAuthenticated={props.isAuth}/>
         </nav>
     </header>
 
