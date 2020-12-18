@@ -9,7 +9,7 @@ export const addIngredient = (name) => {
     }
 }
 
-export const setIngredieents = (ingredients) => {
+export const setIngredients = (ingredients) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
         ingredients: ingredients
@@ -19,9 +19,9 @@ export const setIngredieents = (ingredients) => {
 export const initIngredients = () => {
     return dispatch => {
     axios
-      .get("https://react-my-burger-70237.firebaseio.com/ingredients.json")
+      .get("https://react-my-burger-70237.firebaseio.com/ingredients.json?key=AIzaSyBlKLWVwFPV9h98LL_Pr0pPhiUeSB1_AKg")
       .then((response) => {
-        dispatch(setIngredieents(response.data))
+        dispatch(setIngredients(response.data))
       })
       .catch((error) => {
         dispatch(fetchIngredientsFailed())
